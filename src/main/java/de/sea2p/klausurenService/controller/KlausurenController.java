@@ -13,7 +13,7 @@ public class KlausurenController {
   @GetMapping("test")
   public List<String> test(){
       LinkedList<String> list = new LinkedList<>();
-      list.add("Hello World 1.0");
+      list.add("Hello World 2.0 - Welcome to the Future");
       return list;
   }
 
