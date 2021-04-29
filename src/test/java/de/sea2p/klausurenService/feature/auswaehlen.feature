@@ -34,7 +34,7 @@ Funktionalität: Als angemeldeter Nutzer kann ich einen Studiengang, Semester, M
     Und hat den Studiengang Wirtschaftsinformatik gewählt
     Und das Semester 1 gewählt
     Wenn der Nutzer die Module anfordert
-    Dann bekommt er die Module <modules_WI_1> angezeigt
+    Dann bekommt er die Module angezeigt
 
   Szenario: Ein Nutzer möchte eine Klausur auswählen
     Angenommen ein Nutzer ist eingeloggt
@@ -51,8 +51,8 @@ Funktionalität: Als angemeldeter Nutzer kann ich einen Studiengang, Semester, M
       | KlausurAIPM3SS2028  | Angewandte Informatik | Schmolitzky | 3 | Programmieren 3   | SS2028 |
       | KlausurAIRNSS2018   | Angewandte Informatik | Hübner      | 5 | Rechnernetze      | SS2018 |
     Und hat den Studiengang Wirtschaftsinformatik gewählt
-    Und das Semester 1 gewählt
-    Und das Modul BWL1 gewählt
+    Und das Semester 4 gewählt
+    Und das Modul "SEA2" gewählt
     Wenn der Nutzer die Klausuren anfordert
     Dann bekommt er die Klausuren <year> angezeigt
 

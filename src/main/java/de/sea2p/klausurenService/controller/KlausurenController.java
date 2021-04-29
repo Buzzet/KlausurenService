@@ -47,4 +47,12 @@ public class KlausurenController {
       return mongoService.getKlausurByTitel(titel);
   }
 
+  public List<Klausur> getModul(String currentStudiengang, int currentSemester) {
+      return null;
+  }
+
+  @GetMapping("/years/{studiengang}/{modul}")
+    public List<Klausur> getYears(@PathVariable(value = "studiengang") String studiengang,@PathVariable(value = "modul") String modul) {
+      return mongoService.getYears(studiengang, modul);
+    }
 }
