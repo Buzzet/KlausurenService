@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,14 +31,14 @@ public class KlausurenController {
   @CrossOrigin
   @PostMapping("/test/klausurUpload")
   public String addKlausur(@RequestParam("pdf") MultipartFile file) throws IOException {
-      Klausur klausur = new Klausur();
-      klausur.setTitle("title");
-      klausur.setPdf(
-              new Binary(BsonBinarySubType.BINARY, file.getBytes()));
-
+      Klausur klausur = Klausur.builder().title("title").pdf(new Binary(BsonBinarySubType.BINARY, file.getBytes())).build();
       klausur = mongoService.insertKlausurToDB(klausur);
-
       return klausur.getTitle();
+  }
+
+  @GetMapping("/semester")
+  public HashSet<Integer> getSemester(){
+      return this.mongoService.getSemester();
   }
 
   @CrossOrigin

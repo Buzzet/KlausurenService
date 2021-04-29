@@ -4,6 +4,9 @@ import de.sea2p.klausurenService.model.Klausur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+
 @Component
 public class MongoService {
 
@@ -19,5 +22,11 @@ public class MongoService {
     }
 
 
+    public LinkedList<String> getAllKlausuren() {
+        return null;
+    }
 
+    public HashSet<Integer> getSemester() {
+        return null;
+    }
 }
