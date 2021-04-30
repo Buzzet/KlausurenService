@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 public class MongoService {
 
-    @Autowired(required=false)
+    @Autowired
     KlausurenRepository klausurenRepository;
 
     public Klausur insertKlausurToDB(Klausur klausur){
