@@ -36,6 +36,8 @@ dependencies {
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testImplementation 'io.cucumber:cucumber-java:6.8.1'
 	testImplementation 'io.cucumber:cucumber-junit:6.8.1'
+	// https://mvnrepository.com/artifact/com.itextpdf/itextpdf
+	implementation group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.2'
 }
 
 test {

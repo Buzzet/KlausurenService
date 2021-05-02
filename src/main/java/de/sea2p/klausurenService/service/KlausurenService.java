@@ -18,9 +18,12 @@ public class KlausurenService {
 
     public String addKlausur(String title, MultipartFile file) throws IOException {
         Klausur klausur = Klausur.builder().title(title).build();
+
         klausur.setPdf(
                 new Binary(BsonBinarySubType.BINARY, file.getBytes())
         );
+
+
         klausur = mongoService.insertKlausurToDB(klausur);
         return  klausur.getTitle();
     }

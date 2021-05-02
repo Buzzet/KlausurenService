@@ -1,5 +1,9 @@
 package de.sea2p.klausurenService.controller;
 
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.PdfDocument;
+import com.itextpdf.text.pdf.PdfWriter;
 import de.sea2p.klausurenService.dao.MongoService;
 import de.sea2p.klausurenService.model.Klausur;
 import de.sea2p.klausurenService.service.KlausurenService;
@@ -7,8 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.itextpdf.text.Document;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -49,9 +60,19 @@ public class KlausurenController {
   }
 
   @CrossOrigin(origins = "*")
-  @GetMapping("/test/getKlausur/{id}")
-  public Klausur getKlausur(@PathVariable(value = "id") String titel){
-      return mongoService.getKlausurByTitel(titel);
+  @RequestMapping(value = "/test/klausurAnzeigen/{title}", method = RequestMethod.GET, produces = "application/pdf")
+  public void getKlausur(@PathVariable(value = "title") String titel, HttpServletResponse response) throws Exception{
+      Klausur klausur = klausurenService.getKlausur(titel);
+      try{
+          byte[] pdf = klausur.getPdf().getData();
+
+          response.setContentType("application/pdf");
+          response.setContentLength(pdf.length);
+          response.getOutputStream().write(pdf);
+      }
+      catch(Exception e){
+          e.printStackTrace();
+      }
   }
 
   public List<Klausur> getModul(String currentStudiengang, int currentSemester) {
