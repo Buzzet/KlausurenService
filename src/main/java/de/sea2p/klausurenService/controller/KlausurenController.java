@@ -8,7 +8,9 @@ import de.sea2p.klausurenService.dao.MongoService;
 import de.sea2p.klausurenService.model.Klausur;
 import de.sea2p.klausurenService.service.KlausurenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.itextpdf.text.Document;
@@ -41,16 +43,16 @@ public class KlausurenController {
       return list;
   }
 
-  @CrossOrigin
+  @CrossOrigin(origins = "*")
   @RequestMapping(
           value = "/test/klausurUpload",
           method = RequestMethod.POST,
           consumes = MediaType.MULTIPART_FORM_DATA_VALUE
   )
   @ResponseBody
-  public String addKlausur(@RequestParam("fileArray") MultipartFile fileArray, @RequestParam("title") String title) throws IOException {
-      title = klausurenService.addKlausur(title, fileArray);
-      return "Erfolgreich hochgeladen: " + title;
+  public ResponseEntity<String> addKlausur(@RequestParam("fileArray") MultipartFile fileArray) throws IOException {
+      klausurenService.addKlausur(fileArray.getOriginalFilename(), fileArray);
+      return ResponseEntity.status(HttpStatus.OK).body("Erfolgreich Hochgeladen");
   }
 
 
