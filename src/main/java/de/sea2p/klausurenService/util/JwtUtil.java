@@ -41,6 +41,7 @@ public class JwtUtil {
             final String username = extractUsername(token);
             return username.contains("@haw-hamburg") && !isTokenExpired(token);
         } catch (SignatureException e) {
+            e.printStackTrace();
             return false;
         }
     }
