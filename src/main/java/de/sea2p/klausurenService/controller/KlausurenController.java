@@ -3,6 +3,7 @@ package de.sea2p.klausurenService.controller;
 import de.sea2p.klausurenService.dao.MongoService;
 import de.sea2p.klausurenService.model.Klausur;
 import de.sea2p.klausurenService.service.KlausurenService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
+@SecurityRequirement(name = "bearerAuth")
 public class KlausurenController {
 
     @Autowired
