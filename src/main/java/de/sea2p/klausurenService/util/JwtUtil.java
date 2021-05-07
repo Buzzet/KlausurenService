@@ -39,7 +39,7 @@ public class JwtUtil {
     public Boolean validateToken(String token) {
         try {
             final String username = extractUsername(token);
-            return username.contains("@haw-hamburg") && !isTokenExpired(token);
+            return username.contains("@haw-hamburg.de") && !isTokenExpired(token);
         } catch (SignatureException e) {
             e.printStackTrace();
             return false;
