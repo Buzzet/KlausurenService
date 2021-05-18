@@ -6,7 +6,6 @@ import lombok.Data;
 import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.web.multipart.MultipartFile;
 
 
 @Data
@@ -15,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class Klausur {
 
     @Id
-    private String title;
+    private String id;      //Von MongoDB automatisch vergebene MongoID
     private int semester;
     private String studiengang;
     private String jahr;

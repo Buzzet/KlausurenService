@@ -63,7 +63,7 @@ public class AuswaehlenStepDef {
         // For other transformations you can register a DataTableType.
         for(int i = 0; i < dataTable.height(); i++){
             klausurenListe.add(Klausur.builder()
-                    .title(dataTable.row(i).get(0))
+                    .id(dataTable.row(i).get(0))
                     .studiengang(dataTable.row(i).get(1))
                     .prof(dataTable.row(i).get(2))
                     .semester(Integer.parseInt(dataTable.row(i).get(3)))

@@ -16,8 +16,9 @@ public class KlausurenService {
     @Autowired
     MongoService mongoService;
 
-    public String addKlausur(String title, MultipartFile file) throws IOException {
-        Klausur klausur = Klausur.builder().title(title).build();
+    public String addKlausur(int semester, String studiengang, String jahr, String modul, String prof, MultipartFile file) throws IOException {
+
+        Klausur klausur = Klausur.builder().semester(semester).studiengang(studiengang).jahr(jahr).modul(modul).prof(prof).build();
 
         klausur.setPdf(
                 new Binary(BsonBinarySubType.BINARY, file.getBytes())
@@ -25,10 +26,10 @@ public class KlausurenService {
 
 
         klausur = mongoService.insertKlausurToDB(klausur);
-        return  klausur.getTitle();
+        return  klausur.getId();
     }
 
-    public Klausur getKlausur(String title){
-        return mongoService.getKlausurByTitel(title);
+    public Klausur getKlausur(String id){
+        return mongoService.getKlausurByID(id);
     }
 }

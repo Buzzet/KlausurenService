@@ -18,8 +18,8 @@ public class MongoService {
         return this.klausurenRepository.insert(klausur);
     }
 
-    public Klausur getKlausurByTitel(String titel){
-        return this.klausurenRepository.findById(titel).orElseThrow(()-> new IllegalArgumentException("Klausur nicht gefunden!"));
+    public Klausur getKlausurByID(String id){
+        return this.klausurenRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Klausur nicht gefunden!"));
     }
 
 
