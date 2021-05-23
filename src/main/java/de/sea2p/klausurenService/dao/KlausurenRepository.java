@@ -10,4 +10,8 @@ public interface KlausurenRepository extends MongoRepository<Klausur, String> {
     List<Klausur> getKlausurByStudiengangAndSemester(String studiengang, int semester);
     List<Klausur> getKlausurByStudiengangAndModul(String studiengang ,String modul);
 
+    List<Klausur> getAllByStudiengang(String studiengang);
+    List<Klausur> getAllByStudiengangAndSemesterAndModul(String studiengang, int semester, String modul);
+
+
 }

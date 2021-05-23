@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class MongoService {
@@ -23,7 +25,7 @@ public class MongoService {
     }
 
 
-    public LinkedList<String> getAllKlausuren() {
+    public List<String> getAllKlausuren() {
         return null;
     }
 
@@ -33,5 +35,21 @@ public class MongoService {
 
     public List<Klausur> getYears(String studiengang, String modul) {
         return klausurenRepository.getKlausurByStudiengangAndModul(studiengang,modul);
+    }
+
+    public Set<String> getAllStudiengaenge(){
+        return klausurenRepository.findAll().stream().map(klausur -> klausur.getStudiengang()).collect(Collectors.toSet());
+    }
+
+    public Set<Integer> getAllSemestersByStudiengang(String studiengang){
+        return klausurenRepository.getAllByStudiengang(studiengang).stream().map(klausur -> klausur.getSemester()).collect(Collectors.toSet());
+    }
+
+    public Set<String> getAllModuleByStudiengangAndSemester(String studiengang, int semester){
+        return klausurenRepository.getKlausurByStudiengangAndSemester(studiengang, semester).stream().map(klausur -> klausur.getModul()).collect(Collectors.toSet());
+    }
+
+    public List<Klausur> getAllKlausurenByStudiengangAndSemesterAndModul(String studiengang, int semester, String modul){
+        return klausurenRepository.getAllByStudiengangAndSemesterAndModul(studiengang, semester, modul);
     }
 }
