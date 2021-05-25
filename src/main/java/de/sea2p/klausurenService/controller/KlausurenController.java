@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,7 +53,7 @@ public class KlausurenController {
             @RequestParam("fileArray") MultipartFile fileArray
     ) throws IOException {
         String klausurID = klausurenService.addKlausur(semester, studiengang, jahr, modul, prof, fileArray);
-        return ResponseEntity.status(HttpStatus.OK).body("Klausur mit ID: "+ klausurID +" erfolgreich Hochgeladen");
+        return ResponseEntity.status(HttpStatus.OK).body("Klausur mit ID: " + klausurID + " erfolgreich Hochgeladen");
     }
 
 
@@ -88,30 +87,30 @@ public class KlausurenController {
         return mongoService.getYears(studiengang, modul);
     }
 
-    @CrossOrigin(origins = "*")
+    @CrossOrigin()
     @GetMapping("studiengaenge")
-    public Set<String> getAllStudiengaenge(){
+    public Set<String> getAllStudiengaenge() {
         return mongoService.getAllStudiengaenge();
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("semester/{studiengang}") //TODO Nicht sicher wegen der Reihenfolge semester/{studiengang}
-    public Set<Integer> getAllSemestersByStudiengang(@PathVariable(value = "studiengang") String studiengang){
+    public Set<Integer> getAllSemestersByStudiengang(@PathVariable(value = "studiengang") String studiengang) {
         return mongoService.getAllSemestersByStudiengang(studiengang);
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("module/{studiengang}/{semester}") //TODO Nicht sicher wegen der Reihenfolge
-    public Set<String> getAllModuleByStudiengangAndSemester(@PathVariable(value="studiengang") String studiengang,
-                                                            @PathVariable(value="semester") int semester){
+    public Set<String> getAllModuleByStudiengangAndSemester(@PathVariable(value = "studiengang") String studiengang,
+                                                            @PathVariable(value = "semester") int semester) {
         return mongoService.getAllModuleByStudiengangAndSemester(studiengang, semester);
     }
 
     @CrossOrigin(origins = "*")
     @GetMapping("klausuren/{studiengang}/{semester}/{modul}") //TODO Nicht sicher wegen der Reihenfolge
-    public List<Klausur> getAllKlausurenByStudiengangAndSemesterAndModul(@PathVariable(value="studiengang") String studiengang,
-                                                                         @PathVariable(value="semester") int semester,
-                                                                         @PathVariable(value="modul") String modul){
+    public List<Klausur> getAllKlausurenByStudiengangAndSemesterAndModul(@PathVariable(value = "studiengang") String studiengang,
+                                                                         @PathVariable(value = "semester") int semester,
+                                                                         @PathVariable(value = "modul") String modul) {
         return mongoService.getAllKlausurenByStudiengangAndSemesterAndModul(studiengang, semester, modul);
     }
 
