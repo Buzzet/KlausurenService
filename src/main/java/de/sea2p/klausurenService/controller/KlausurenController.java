@@ -44,7 +44,7 @@ public class KlausurenController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ResponseBody
-    public ResponseEntity<String> addKlausur(@RequestBody KlausurRequest request) throws IOException {
+    public ResponseEntity<String> addKlausur(@ModelAttribute KlausurRequest request) throws IOException {
         String klausurID = klausurenService.addKlausur(request.toKlausur());
         return ResponseEntity.status(HttpStatus.OK).body("Klausur mit ID: " + klausurID + " erfolgreich Hochgeladen");
     }
