@@ -2,6 +2,7 @@ package de.sea2p.klausurenService.controller;
 
 import de.sea2p.klausurenService.dao.MongoService;
 import de.sea2p.klausurenService.model.Klausur;
+import de.sea2p.klausurenService.model.KlausurRequest;
 import de.sea2p.klausurenService.service.KlausurenService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -44,15 +44,8 @@ public class KlausurenController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ResponseBody
-    public ResponseEntity<String> addKlausur(
-            @RequestParam("semester") int semester,
-            @RequestParam("studiengang") String studiengang,
-            @RequestParam("jahr") String jahr,
-            @RequestParam("modul") String modul,
-            @RequestParam("prof") String prof,
-            @RequestParam("fileArray") MultipartFile fileArray
-    ) throws IOException {
-        String klausurID = klausurenService.addKlausur(semester, studiengang, jahr, modul, prof, fileArray);
+    public ResponseEntity<String> addKlausur(@RequestBody KlausurRequest request) throws IOException {
+        String klausurID = klausurenService.addKlausur(request.toKlausur());
         return ResponseEntity.status(HttpStatus.OK).body("Klausur mit ID: " + klausurID + " erfolgreich Hochgeladen");
     }
 
