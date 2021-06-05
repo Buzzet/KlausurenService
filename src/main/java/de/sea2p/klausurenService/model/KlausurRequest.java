@@ -3,6 +3,7 @@ package de.sea2p.klausurenService.model;
 import lombok.Data;
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
+import org.springframework.boot.convert.DataSizeUnit;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
