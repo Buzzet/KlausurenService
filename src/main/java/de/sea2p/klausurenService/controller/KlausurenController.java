@@ -30,13 +30,6 @@ public class KlausurenController {
     @Autowired
     KlausurenService klausurenService;
 
-    @GetMapping("test")
-    public List<String> test() {
-        LinkedList<String> list = new LinkedList<>();
-        list.add("Hello World 2.0 - Welcome to the Future");
-        return list;
-    }
-
     @CrossOrigin(origins = "*")
     @RequestMapping(
             value = "hochladen",
@@ -47,12 +40,6 @@ public class KlausurenController {
     public ResponseEntity<String> addKlausur(@ModelAttribute KlausurRequest request) throws IOException {
         String klausurID = klausurenService.addKlausur(request.toKlausur());
         return ResponseEntity.status(HttpStatus.OK).body("Klausur mit ID: " + klausurID + " erfolgreich Hochgeladen");
-    }
-
-
-    @GetMapping("/semester")
-    public HashSet<Integer> getSemester() {
-        return this.mongoService.getSemester();
     }
 
     @CrossOrigin(origins = "*")
@@ -70,16 +57,6 @@ public class KlausurenController {
         }
     }
 
-    public List<Klausur> getModul(String currentStudiengang, int currentSemester) {
-        return null;
-    }
-
-    @CrossOrigin(origins = "*")
-    @GetMapping("/years/{studiengang}/{modul}")
-    public List<Klausur> getYears(@PathVariable(value = "studiengang") String studiengang, @PathVariable(value = "modul") String modul) {
-        return mongoService.getYears(studiengang, modul);
-    }
-
     @CrossOrigin()
     @GetMapping("studiengaenge")
     public Set<String> getAllStudiengaenge() {
@@ -87,20 +64,20 @@ public class KlausurenController {
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping("semester/{studiengang}") //TODO Nicht sicher wegen der Reihenfolge semester/{studiengang}
+    @GetMapping("semester/{studiengang}")
     public Set<Integer> getAllSemestersByStudiengang(@PathVariable(value = "studiengang") String studiengang) {
         return mongoService.getAllSemestersByStudiengang(studiengang);
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping("module/{studiengang}/{semester}") //TODO Nicht sicher wegen der Reihenfolge
+    @GetMapping("module/{studiengang}/{semester}")
     public Set<String> getAllModuleByStudiengangAndSemester(@PathVariable(value = "studiengang") String studiengang,
                                                             @PathVariable(value = "semester") int semester) {
         return mongoService.getAllModuleByStudiengangAndSemester(studiengang, semester);
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping("klausuren/{studiengang}/{semester}/{modul}") //TODO Nicht sicher wegen der Reihenfolge
+    @GetMapping("klausuren/{studiengang}/{semester}/{modul}")
     public List<Klausur> getAllKlausurenByStudiengangAndSemesterAndModul(@PathVariable(value = "studiengang") String studiengang,
                                                                          @PathVariable(value = "semester") int semester,
                                                                          @PathVariable(value = "modul") String modul) {

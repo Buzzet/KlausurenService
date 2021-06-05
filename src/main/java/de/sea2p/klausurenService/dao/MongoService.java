@@ -24,7 +24,7 @@ public class MongoService {
         return this.klausurenRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Klausur nicht gefunden!"));
     }
 
-
+    /*
     public List<String> getAllKlausuren() {
         return null;
     }
@@ -36,6 +36,8 @@ public class MongoService {
     public List<Klausur> getYears(String studiengang, String modul) {
         return klausurenRepository.getKlausurByStudiengangAndModul(studiengang,modul);
     }
+
+     */
 
     public Set<String> getAllStudiengaenge(){
         return klausurenRepository.findAll().stream().map(klausur -> klausur.getStudiengang()).collect(Collectors.toSet());
@@ -50,6 +52,6 @@ public class MongoService {
     }
 
     public List<Klausur> getAllKlausurenByStudiengangAndSemesterAndModul(String studiengang, int semester, String modul){
-        return klausurenRepository.getAllByStudiengangAndSemesterAndModul(studiengang, semester, modul);
+        return klausurenRepository.getAllByStudiengangAndSemesterAndModul(studiengang, semester, modul).stream().map(klausur -> Klausur.builder().jahr(klausur.getJahr()).id(klausur.getId()).build()).collect(Collectors.toList());
     }
 }

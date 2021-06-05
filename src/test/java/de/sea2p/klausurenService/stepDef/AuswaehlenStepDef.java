@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.mockito.BDDMockito.*;
 
@@ -33,7 +34,7 @@ public class AuswaehlenStepDef {
     MongoService mongoService = new MongoService();
     KlausurenController klausurenController = new KlausurenController();
     LinkedList<Klausur> klausurenListe = new LinkedList<>();
-    HashSet<Integer> semester = new HashSet<>();
+    LinkedList<Klausur> semester = new LinkedList<>();
     LinkedList<Klausur> currentList = new LinkedList<>();
     LinkedList<Klausur> modulListe = new LinkedList<>();
     String currentModul = "";
@@ -70,7 +71,6 @@ public class AuswaehlenStepDef {
                     .modul(dataTable.row(i).get(4))
                     .jahr(dataTable.row(i).get(5))
                     .build());
-            semester.add(Integer.parseInt(dataTable.row(i).get(3)));
 
         }
     }
@@ -78,12 +78,18 @@ public class AuswaehlenStepDef {
     @Wenn("er sein Semester anzeigen möchte")
     public void er_sein_semester_anzeigen_möchte() {
         // Write code here that turns the phrase above into concrete actions
-        given(klausurenRepository.findAll()).willReturn(klausurenListe);
+        for(Klausur kl: klausurenListe){
+            if(kl.getStudiengang().equals(currentStudiengang)){
+                semester.add(kl);
+            }
+        }
+        given(klausurenRepository.getAllByStudiengang(currentStudiengang)).willReturn(semester);
     }
 
     @Dann("bekommt er die Semester <semester> angezeigt")
     public void bekommt_er_die_semester_semester_angezeigt() {
-        BDDAssertions.assertThat(klausurenController.getSemester()).isSameAs(semester);
+        Set<Integer> result = semester.stream().map(klausur -> klausur.getSemester()).collect(Collectors.toSet());
+        BDDAssertions.assertThat(mongoService.getAllSemestersByStudiengang(currentStudiengang)).isEqualTo(result);
     }
 
     @Angenommen("hat den Studiengang Wirtschaftsinformatik gewählt")
@@ -109,7 +115,8 @@ public class AuswaehlenStepDef {
 
     @Dann("bekommt er die Module angezeigt")
     public void bekommt_er_die_module_angezeigt() {
-        BDDAssertions.assertThat(klausurenController.getModul(currentStudiengang, currentSemester)).isSameAs(modulListe);
+        Set<String> result = modulListe.stream().map(klausur -> klausur.getModul()).collect(Collectors.toSet());
+        BDDAssertions.assertThat(mongoService.getAllModuleByStudiengangAndSemester(currentStudiengang, currentSemester)).isEqualTo(result);
     }
 
     @Angenommen("das Modul {string} gewählt")
@@ -120,15 +127,15 @@ public class AuswaehlenStepDef {
     @Wenn("der Nutzer die Klausuren anfordert")
     public void der_nutzer_die_klausuren_anfordert() {
         for(Klausur kl: klausurenListe){
-            if(kl.getModul().equals(currentModul) && kl.getStudiengang().equals(currentStudiengang)){
-                currentList.add(kl);
+            if(kl.getModul().equals(currentModul) && kl.getStudiengang().equals(currentStudiengang) && kl.getSemester() == currentSemester){
+                currentList.add(Klausur.builder().id(kl.getId()).jahr(kl.getJahr()).build());
             }
         }
-        given(klausurenRepository.getKlausurByStudiengangAndModul(currentStudiengang,currentModul)).willReturn(currentList);
+        given(klausurenRepository. getAllByStudiengangAndSemesterAndModul(currentStudiengang, currentSemester,currentModul)).willReturn(currentList);
     }
 
     @Dann("bekommt er die Klausuren <year> angezeigt")
     public void bekommt_er_die_klausuren_year_angezeigt() {
-        BDDAssertions.assertThat(klausurenController.getYears(currentStudiengang,currentModul)).isSameAs(currentList);
+        BDDAssertions.assertThat(mongoService.getAllKlausurenByStudiengangAndSemesterAndModul(currentStudiengang,currentSemester,currentModul)).isEqualTo(currentList);
     }
 }
