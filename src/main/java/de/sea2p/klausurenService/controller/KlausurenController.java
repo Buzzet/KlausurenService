@@ -1,5 +1,6 @@
 package de.sea2p.klausurenService.controller;
 
+import com.itextpdf.text.DocumentException;
 import de.sea2p.klausurenService.dao.MongoService;
 import de.sea2p.klausurenService.model.Klausur;
 import de.sea2p.klausurenService.model.KlausurRequest;
@@ -37,7 +38,7 @@ public class KlausurenController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ResponseBody
-    public ResponseEntity<String> addKlausur(@ModelAttribute KlausurRequest request) throws IOException {
+    public ResponseEntity<String> addKlausur(@ModelAttribute KlausurRequest request) throws IOException, DocumentException {
 
         String contentType = request.getFileArray().getContentType();
 
