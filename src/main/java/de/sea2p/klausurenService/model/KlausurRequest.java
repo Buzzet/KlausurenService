@@ -30,6 +30,8 @@ public class KlausurRequest {
     private String uploadedFrom;
 
     public Klausur toKlausur() throws IOException {
+
+
         return Klausur.builder()
                 .jahr(jahr)
                 .modul(modul)
@@ -38,5 +40,12 @@ public class KlausurRequest {
                 .semester(semester)
                 .studiengang(studiengang)
                 .build();
+    }
+
+    private void imageToPDF(){
+        if(fileArray.getContentType().equals("image/jpeg")){
+
+
+        }
     }
 }

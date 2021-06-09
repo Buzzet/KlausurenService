@@ -38,8 +38,17 @@ public class KlausurenController {
     )
     @ResponseBody
     public ResponseEntity<String> addKlausur(@ModelAttribute KlausurRequest request) throws IOException {
-        String klausurID = klausurenService.addKlausur(request.toKlausur());
-        return ResponseEntity.status(HttpStatus.OK).body("Klausur mit ID: " + klausurID + " erfolgreich Hochgeladen");
+
+        String contentType = request.getFileArray().getContentType();
+
+        if(contentType.equals("image/jpeg") || contentType.equals("application/pdf")){
+
+            String klausurID = klausurenService.addKlausur(request.toKlausur());
+            return ResponseEntity.status(HttpStatus.OK).body("Klausur mit ID: " + klausurID + " erfolgreich Hochgeladen");
+
+        }
+
+        throw new IOException("Ungueltiges Dateiformat");
     }
 
     @CrossOrigin(origins = "*")
