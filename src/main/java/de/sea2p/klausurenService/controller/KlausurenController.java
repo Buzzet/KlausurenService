@@ -42,7 +42,7 @@ public class KlausurenController {
 
         String contentType = request.getFileArray().getContentType();
 
-        if(contentType.equals("image/jpeg") || contentType.equals("application/pdf")){
+        if(contentType.equals("image/jpeg") || contentType.equals("application/pdf")|| contentType.equals("image/png")){
 
             String klausurID = klausurenService.addKlausur(request.toKlausur());
             return ResponseEntity.status(HttpStatus.OK).body("Klausur mit ID: " + klausurID + " erfolgreich Hochgeladen");

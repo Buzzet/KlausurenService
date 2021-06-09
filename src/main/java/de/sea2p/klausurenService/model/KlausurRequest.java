@@ -45,8 +45,9 @@ public class KlausurRequest {
                 .build();
     }
 
+    //
     private byte[] getPDF() throws IOException, DocumentException {
-        if(fileArray.getContentType().equals("image/jpeg")){
+        if(fileArray.getContentType().equals("image/jpeg") || fileArray.getContentType().equals("image/png")){
             Document pdfDoc = new Document();
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 PdfWriter writer = PdfWriter.getInstance(pdfDoc, out);
