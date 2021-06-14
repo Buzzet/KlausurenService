@@ -51,9 +51,11 @@ public class KlausurRequest {
             Document pdfDoc = new Document();
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 PdfWriter writer = PdfWriter.getInstance(pdfDoc, out);
+                Image image = Image.getInstance(fileArray.getBytes());
+                image.scaleToFit(pdfDoc.getPageSize());
                 writer.open();
                 pdfDoc.open();
-                pdfDoc.add(Image.getInstance(fileArray.getBytes()));
+                pdfDoc.add(image);
                 pdfDoc.close();
                 writer.close();
                 return out.toByteArray();
