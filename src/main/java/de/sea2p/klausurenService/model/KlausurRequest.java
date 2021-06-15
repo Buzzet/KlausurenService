@@ -52,7 +52,7 @@ public class KlausurRequest {
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 PdfWriter writer = PdfWriter.getInstance(pdfDoc, out);
                 Image image = Image.getInstance(fileArray.getBytes());
-                image.scaleToFit(com.itextpdf.text.PageSize.A4.getWidth(), com.itextpdf.text.PageSize.A4.getHeight());
+                image.scaleToFit(pdfDoc.getPageSize());
                 writer.open();
                 pdfDoc.open();
                 pdfDoc.add(image);
