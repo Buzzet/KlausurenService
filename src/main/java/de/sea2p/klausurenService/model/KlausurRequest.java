@@ -53,6 +53,7 @@ public class KlausurRequest {
                 PdfWriter writer = PdfWriter.getInstance(pdfDoc, out);
                 Image image = Image.getInstance(fileArray.getBytes());
                 image.scaleToFit(pdfDoc.getPageSize());
+                image.setAlignment(Image.ALIGN_CENTER);
                 writer.open();
                 pdfDoc.open();
                 pdfDoc.add(image);
