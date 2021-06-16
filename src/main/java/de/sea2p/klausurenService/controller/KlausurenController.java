@@ -1,5 +1,6 @@
 package de.sea2p.klausurenService.controller;
 
+import com.itextpdf.text.DocumentException;
 import de.sea2p.klausurenService.dao.MongoService;
 import de.sea2p.klausurenService.model.Klausur;
 import de.sea2p.klausurenService.model.KlausurRequest;
@@ -37,9 +38,18 @@ public class KlausurenController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     @ResponseBody
-    public ResponseEntity<String> addKlausur(@ModelAttribute KlausurRequest request) throws IOException {
-        String klausurID = klausurenService.addKlausur(request.toKlausur());
-        return ResponseEntity.status(HttpStatus.OK).body("Klausur mit ID: " + klausurID + " erfolgreich Hochgeladen");
+    public ResponseEntity<String> addKlausur(@ModelAttribute KlausurRequest request) throws IOException, DocumentException {
+
+        String contentType = request.getFileArray().getContentType();
+
+        if(contentType.equals("image/jpeg") || contentType.equals("application/pdf")|| contentType.equals("image/png")){
+
+            String klausurID = klausurenService.addKlausur(request.toKlausur());
+            return ResponseEntity.status(HttpStatus.OK).body("Klausur mit ID: " + klausurID + " erfolgreich Hochgeladen");
+
+        }
+
+        throw new IOException("Ungueltiges Dateiformat");
     }
 
     @CrossOrigin(origins = "*")
